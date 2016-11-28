@@ -1,21 +1,31 @@
 import re
 import os
-import time
 import sys
+import logging
 
-DIR = "/Volumes/Vault/Series/"
-LOGFILE = "/Volumes/Vault/flexget/flexget.log"
+DIR = "/Users/Cibeles/PycharmProjects/MelaUtils/Series"
+LOGFILE = "/Users/Cibeles/PycharmProjects/MelaUtils/flexget/flexget.log"
+LOGFORMAT = "[%(asctime)s - %(levelname)s] %(message)s"
+
+#DIR = "/Volumes/Vault/Series/"
+#LOGFILE = "/Volumes/Vault/flexget/flexget.log"
 
 nombre_serie = os.listdir(DIR)
 fobj = sys.stdout
 ftype_reg_exp = re.compile('.*\.(avi|mkv|mp4)$')
+formatter = logging.Formatter(LOGFORMAT)
 
-def escribe_log(tipo, mensaje):
-    log_msg = time.strftime("[%d/%m/%Y %H:%M:%S] CLASSIFY.")
-    log_msg += tipo + " "
-    log_msg += mensaje + "\n"
-    fobj.write(log_msg)
+# file handler
+file = logging.FileHandler(LOGFILE)
+file.setLevel(logging.DEBUG)
+file.setFormatter(formatter)
+logger.addHandler(file)
 
+# console handler
+console = logging.StreamHandler()
+console.setLevel(logging.DEBUG)
+console.setFormatter(formatter)
+logger.addHandler(console)
 
 try:
     fobj = open(LOGFILE, 'a')
@@ -28,25 +38,24 @@ for serie in nombre_serie:
     if os.path.isdir(cwd):
         episodios = os.listdir(cwd)
         for item in episodios:
-            escribe_log("INFO", "Procesando directorio " + cwd)
+            logger.info('Started %s', cwd)
             if os.path.isfile(cwd + item) and (ftype_reg_exp.match(cwd + item)):
                 try:
                     temporada = re.findall("S|s[0-9]{2}", item)[0]
                 except IndexError:
-                    escribe_log("WARN","Formato de nombre de capitulo erroneo " + cwd + item)
+                    logger.warn("Formato de nombre de capitulo erroneo %s", cwd + item)
                     continue
                 try:
                     if os.access(cwd, os.W_OK):
                         os.rename(cwd + item, cwd + temporada.upper() + '/' + item)
-                        escribe_log("INFO", "Episodio " + item + " movido a " + temporada.upper())
+                        logger.info("Episodio " + item + " movido a " + temporada.upper())
                     else:
-                        escribe_log("ERROR", "Error de permisos, imposible mover fichero")
+                        logger.error("Error de permisos, imposible mover fichero %s", cwd + item)
                 except OSError, e:
                     if e.errno == 2:
                         if os.access(cwd, os.W_OK):
                             os.mkdir(cwd + temporada.upper())
                             os.rename(cwd + item, cwd + temporada.upper() + '/' + item)
-                            escribe_log("INFO",
-                                        "Episodio " + item + " movido a " + temporada.upper() + ", directorio " + temporada.upper() + " creado")
+                            logger.info("Episodio %s movido a %s, directorio %s creado", item, cwd + temporada.upper(), temporada.upper())
                         else:
-                            escribe_log("ERROR", "Error de permisos, imposible crear directorio")
+                            logger.error("Error de permisos, imposible crear directorio %s", cwd+ temporada.upper())
