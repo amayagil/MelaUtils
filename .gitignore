@@ -1,0 +1,5 @@
+exec
+.idea
+*.pyc
+.tox
+.DS_Store
