@@ -30,7 +30,11 @@ for serie in nombre_serie:
         for item in episodios:
             escribe_log("INFO", "Procesando directorio " + cwd)
             if os.path.isfile(cwd + item) and (ftype_reg_exp.match(cwd + item)):
-                temporada = re.findall("S|s[0-9]{2}", item)[0]
+                try:
+                    temporada = re.findall("S|s[0-9]{2}", item)[0]
+                except IndexError:
+                    escribe_log("WARN","Formato de nombre de capitulo erroneo " + cwd + item)
+                    continue
                 try:
                     if os.access(cwd, os.W_OK):
                         os.rename(cwd + item, cwd + temporada.upper() + '/' + item)
