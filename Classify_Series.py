@@ -14,6 +14,7 @@ nombre_serie = os.listdir(DIR)
 fobj = sys.stdout
 ftype_reg_exp = re.compile('.*\.(avi|mkv|mp4)$')
 formatter = logging.Formatter(LOGFORMAT)
+logger = logging.getLogger(__name__)
 
 # file handler
 file = logging.FileHandler(LOGFILE)
