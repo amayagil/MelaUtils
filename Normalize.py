@@ -37,7 +37,7 @@ for serie in nombre_serie:
     cwd = DIR + '/' + serie + '/'
     episodios = os.listdir(cwd)
     for item in episodios:
-        if not t_reg_ex.match(item):
+        if os.path.isdir(cwd + item) and not t_reg_ex.match(item):
             normalize_dir(item, cwd)
 
 
