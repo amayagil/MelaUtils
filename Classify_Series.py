@@ -3,12 +3,12 @@ import os
 import sys
 import logging
 
-DIR = "/Users/Cibeles/PycharmProjects/MelaUtils/Series"
-LOGFILE = "/Users/Cibeles/PycharmProjects/MelaUtils/flexget/flexget.log"
+#DIR = "/Users/Cibeles/PycharmProjects/MelaUtils/Series"
+#LOGFILE = "/Users/Cibeles/PycharmProjects/MelaUtils/flexget/flexget.log"
 LOGFORMAT = "[%(asctime)s - %(levelname)s] %(message)s"
 
-#DIR = "/Volumes/Vault/Series/"
-#LOGFILE = "/Volumes/Vault/flexget/flexget.log"
+DIR = "/Volumes/Vault/Series/"
+LOGFILE = "/Volumes/Vault/flexget/flexget.log"
 
 nombre_serie = os.listdir(DIR)
 fobj = sys.stdout
@@ -43,19 +43,19 @@ for serie in nombre_serie:
                 try:
                     temporada = re.findall("S[0-9]{2}|s[0-9]{2}", item)[0]
                 except IndexError:
-                    logger.warn("Formato de nombre de capitulo erroneo %s" % (cwd + item))
+                    logger.warn("[CLASSIFY] Formato de nombre de capitulo erroneo %s" % (cwd + item))
                     continue
                 try:
                     if os.access(cwd, os.W_OK):
                         os.rename(cwd + item, cwd + temporada.upper() + '/' + item)
-                        logger.info("Episodio %s movido a %s" % (item, temporada.upper()))
+                        logger.info("[CLASSIFY] Episodio %s movido a %s" % (item, temporada.upper()))
                     else:
-                        logger.error("Error de permisos, imposible mover fichero %s" % (cwd + item))
+                        logger.error("[CLASSIFY] Error de permisos, imposible mover fichero %s" % (cwd + item))
                 except OSError, e:
                     if e.errno == 2:
                         if os.access(cwd, os.W_OK):
                             os.mkdir(cwd + temporada.upper())
                             os.rename(cwd + item, cwd + temporada.upper() + '/' + item)
-                            logger.info("Episodio %s movido a %s, directorio %s creado" % (item, cwd + temporada.upper(), temporada.upper()))
+                            logger.info("[CLASSIFY] Episodio %s movido a %s, directorio %s creado" % (item, cwd + temporada.upper(), temporada.upper()))
                         else:
-                            logger.error("Error de permisos, imposible crear directorio %s" % (cwd + temporada.upper()))
+                            logger.error("[CLASSIFY] Error de permisos, imposible crear directorio %s" % (cwd + temporada.upper()))
