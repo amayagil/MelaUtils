@@ -35,7 +35,7 @@ except Exception as e:
         print "No se pueden escribir logs, el path no existe: " + e.strerror
 
 for serie in nombre_serie:
-    cwd = DIR + serie + '/'
+    cwd = DIR + '/' + serie + '/'
     if os.path.isdir(cwd):
         episodios = os.listdir(cwd)
         for item in episodios:
