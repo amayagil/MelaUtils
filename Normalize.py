@@ -1,5 +1,6 @@
 import re
 import os
+import sys
 import logging
 
 DIR = "/Users/Cibeles/PycharmProjects/MelaUtils/Series"
@@ -11,6 +12,7 @@ LOGFORMAT = "[%(asctime)s - %(levelname)s] %(message)s"
 
 formatter = logging.Formatter(LOGFORMAT)
 logger = logging.getLogger()
+fobj = sys.stdout
 
 # file handler
 file = logging.FileHandler(LOGFILE)
@@ -34,6 +36,12 @@ def normalize_dir(dirname, cwd):
 
 nombre_serie = os.listdir(DIR)
 t_reg_ex = re.compile("[s|S][0-9]{2}")
+
+try:
+    fobj = open(LOGFILE, 'a')
+except Exception as e:
+    if e.errno == 2:
+        print "No se pueden escribir logs, el path no existe: " + e.strerror
 
 for serie in nombre_serie:
     cwd = DIR + '/' + serie + '/'
