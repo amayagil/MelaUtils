@@ -51,4 +51,5 @@ for serie in nombre_serie:
             if os.path.isdir(cwd + item) and not t_reg_ex.match(item):
                 normalize_dir(item, cwd)
             else:
-                logger.info("[NORMALIZE] Nada que normalizar en " + cwd)
+                logger.info("[NORMALIZE] Nada que normalizar en " + cwd + item)
+                print "[NORMALIZE] Nada que normalizar en " + cwd + item

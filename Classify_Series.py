@@ -3,12 +3,12 @@ import os
 import sys
 import logging
 
-#DIR = "/Users/Cibeles/PycharmProjects/MelaUtils/Series"
-#LOGFILE = "/Users/Cibeles/PycharmProjects/MelaUtils/flexget/flexget.log"
+DIR = "/Users/Cibeles/PycharmProjects/MelaUtils/Series"
+LOGFILE = "/Users/Cibeles/PycharmProjects/MelaUtils/flexget/flexget.log"
 LOGFORMAT = "[%(asctime)s - %(levelname)s] %(message)s"
 
-DIR = "/Volumes/Vault/Series/"
-LOGFILE = "/Volumes/Vault/flexget/flexget.log"
+#DIR = "/Volumes/Vault/Series/"
+#LOGFILE = "/Volumes/Vault/flexget/flexget.log"
 
 nombre_serie = os.listdir(DIR)
 fobj = sys.stdout
@@ -59,3 +59,4 @@ for serie in nombre_serie:
                             logger.info("[CLASSIFY] Episodio %s movido a %s, directorio %s creado" % (item, cwd + temporada.upper(), temporada.upper()))
                         else:
                             logger.error("[CLASSIFY] Error de permisos, imposible crear directorio %s" % (cwd + temporada.upper()))
+                            sys.exit(-1)
