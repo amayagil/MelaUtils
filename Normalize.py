@@ -30,7 +30,6 @@ def normalize_dir(dirname, cwd):
     if season_no:
         final_season = "S" + season_no[0] if len(season_no[0]) > 1 else 'S0' + season_no[0]
         os.rename(cwd + dirname, cwd + final_season)
-        print "[NORMALIZE] Directorio " + dirname + " renombrado a " + final_season
         logger.info("[NORMALIZE] Directorio " + dirname + " renombrado a " + final_season)
 
 nombre_serie = os.listdir(DIR)
@@ -51,4 +50,3 @@ for serie in nombre_serie:
                 normalize_dir(item, cwd)
             else:
                 logger.info("[NORMALIZE] Nada que normalizar en " + cwd + item)
-                print "[NORMALIZE] Nada que normalizar en " + cwd + item
