@@ -44,13 +44,11 @@ for peli in nombre_dir:
     #print "directorio " + cwd
     if not (ftype_serie_regex.match(cwd)):
         #os.path.isdir(cwd) or os.path.isfile(cwd) ) and
-        logger.info(cwd + " no es una serie, se movera a " + PELIS_HOME
-        print "procesando: " + cwd
+        logger.info(cwd + " no es una serie, se movera a " + PELIS_HOME)
         try:
             shutil.move(cwd,PELIS_HOME)
             logger.info(cwd + " movido exitosamente")
         except Exception, e:
-            print "Error al mover: " + e.message
            logger.error(cwd + " no se ha podido mover a " + PELIS_HOME + "el directorio ya existe")
     else:
         logger.warn(cwd + " es una serie, no una peli, no se movera.")

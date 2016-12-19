@@ -12,17 +12,16 @@ LOGFORMAT = "[%(asctime)s - %(levelname)s] %(message)s"
 
 formatter = logging.Formatter(LOGFORMAT)
 logger = logging.getLogger()
+formatter = logging.Formatter(LOGFORMAT)
 fobj = sys.stdout
 
 # file handler
 file = logging.FileHandler(LOGFILE)
-file.setLevel(logging.DEBUG)
 file.setFormatter(formatter)
 logger.addHandler(file)
 
 # console handler
 console = logging.StreamHandler()
-console.setLevel(logging.DEBUG)
 console.setFormatter(formatter)
 logger.addHandler(console)
 
