@@ -4,28 +4,29 @@ import sys
 import shutil
 import logging
 
-#DIR = "/Users/Cibeles/PycharmProjects/MelaUtils/Descargas"
-#LOGFILE = "/Users/Cibeles/PycharmProjects/MelaUtils/flexget/flexget.log"
+DIR = "/Users/Cibeles/PycharmProjects/MelaUtils/Descargas"
+LOGFILE = "/Users/Cibeles/PycharmProjects/MelaUtils/flexget/flexget.log"
 LOGFORMAT = "[%(asctime)s - %(levelname)s] %(message)s"
 
-DIR = "/Volumes/Vault/Descargas/"
-LOGFILE = "/Volumes/Vault/flexget/flexget.log"
+#DIR = "/Volumes/Vault/Descargas/"
+#LOGFILE = "/Volumes/Vault/flexget/flexget.log"
 
 nombre_dir = os.listdir(DIR)
 fobj = sys.stdout
 ftype_reg_exp = re.compile('.*\.(avi|mkv|mp4|mpg|mpeg)$')
 formatter = logging.Formatter(LOGFORMAT)
 logger = logging.getLogger()
+logger.setLevel(logging.DEBUG)
 
 # file handler
 file = logging.FileHandler(LOGFILE)
-file.setLevel(logging.NOTSET)
+#file.setLevel(logging.DEBUG)
 file.setFormatter(formatter)
 logger.addHandler(file)
 
 # console handler
 console = logging.StreamHandler()
-console.setLevel(logging.NOTSET)
+#console.setLevel(logging.DEBUG)
 console.setFormatter(formatter)
 logger.addHandler(console)
 

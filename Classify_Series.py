@@ -15,16 +15,17 @@ fobj = sys.stdout
 ftype_reg_exp = re.compile('.*\.(avi|mkv|mp4|mpg|mpeg)$')
 formatter = logging.Formatter(LOGFORMAT)
 logger = logging.getLogger()
+logger.setLevel(logging.DEBUG)
 
 # file handler
 file = logging.FileHandler(LOGFILE)
-file.setLevel(logging.DEBUG)
+#file.setLevel(logging.INFO)
 file.setFormatter(formatter)
 logger.addHandler(file)
 
 # console handler
 console = logging.StreamHandler()
-console.setLevel(logging.DEBUG)
+#console.setLevel(logging.INFO)
 console.setFormatter(formatter)
 logger.addHandler(console)
 
